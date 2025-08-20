@@ -60,7 +60,7 @@ services:
     <<: *x-app-common
     image: 'redirection:${TAG-latest}'
     env_file:
-      - redirection/.env
+      - .env
     build:
       context: redirection
       dockerfile: Dockerfile
@@ -70,9 +70,9 @@ services:
     <<: *x-app-common
     image: 'shortening:${TAG-latest}'
     env_file:
-      - .env
+      - url_shortener_service/.env
     build:
-      context: shortening
+      context: url_shortener_service
       dockerfile: Dockerfile
     networks: [ internal ]
 

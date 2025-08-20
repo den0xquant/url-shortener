@@ -3,8 +3,8 @@ from fastapi import FastAPI
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.routing import APIRoute
 
-from redirection.core.config import settings
-from redirection.api.main import api_router
+from app.core.config import settings
+from app.api.main import api_router
 
 
 def custom_generate_unique_id(route: APIRoute) -> str:

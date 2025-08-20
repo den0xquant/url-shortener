@@ -6,6 +6,7 @@ readme = "README.md"
 requires-python = ">=3.13"
 dependencies = [
     "fastapi>=0.116.1",
+    "motor>=3.7.1",
     "passlib>=1.7.4",
     "pydantic-settings>=2.10.1",
     "pyjwt>=2.10.1",
@@ -13,5 +14,6 @@ dependencies = [
     "sentry-sdk>=2.35.0",
     "sqlalchemy>=2.0.43",
     "sqlmodel>=0.0.24",
+    "tenacity>=9.1.2",
     "uvicorn>=0.35.0",
 ]
