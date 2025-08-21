@@ -34,7 +34,7 @@ services:
         condition: service_healthy
         restart: true
     healthcheck:
-      test: [ "CMD", "curl", "-f", "http://localhost:8000/api/v1/utils/healthy" ]
+      test: [ "CMD", "curl", "-f", "http://localhost:8000/api/v1/utils/health-check" ]
       interval: 100s
       timeout: 5s
       retries: 5
@@ -56,6 +56,8 @@ services:
       context: url_shortener_service
       dockerfile: Dockerfile
     networks: [ internal ]
+    ports:
+      - "8000:8000"
 
   redis:
     image: redis:alpine

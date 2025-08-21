@@ -55,7 +55,7 @@ class Settings(BaseSettings):
     @computed_field
     @property
     def MONGODB_URI(self) -> str:
-        return f"mongodb://{self.MONGODB_USER}:{self.MONGODB_PASSWORD}@{self.MONGODB_SERVER}:{self.MONGODB_PORT}/{self.MONGODB_DB}?retryWrites=true&w=majority"
+        return f"mongodb://{self.MONGODB_USER}:{self.MONGODB_PASSWORD}@{self.MONGODB_SERVER}:{self.MONGODB_PORT}/{self.MONGODB_DB}?retryWrites=true&w=majority&authSource=admin"
 
     def _check_default_secret(self, var_name: str, value: str | None) -> None:
         if value == "changethis":
