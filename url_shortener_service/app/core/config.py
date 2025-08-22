@@ -1,4 +1,5 @@
 import secrets
+import string
 import warnings
 from typing import Annotated, Any, Literal
 
@@ -51,6 +52,21 @@ class Settings(BaseSettings):
     MONGODB_PORT: int = 27017
     MONGODB_DB: str = "url_shortener"
     MONGODB_COLLECTION: str = "urls"
+
+    REDIS_HOST: str = "redis"
+    REDIS_PORT: int = 6379
+    REDIS_DB: int = 0
+    REDIS_COUNTER_KEY: str = "url_id_counter"
+    REDIS_CACHE_PREFIX: str = "short_url:"
+
+    symbols: str = string.ascii_letters + string.digits
+    BASE: int = len(symbols)
+    SHORT_URL_LENGTH: int = 7
+
+    @computed_field
+    @property
+    def REDIS_URI(self) -> str:
+        return f"redis://{self.REDIS_HOST}:{self.REDIS_PORT}/{self.REDIS_DB}?decode_responses=True"
 
     @computed_field
     @property
