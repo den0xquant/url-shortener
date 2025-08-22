@@ -33,6 +33,9 @@ services:
       db:
         condition: service_healthy
         restart: true
+      redis:
+        condition: service_healthy
+        restart: true
     healthcheck:
       test: [ "CMD", "curl", "-f", "http://localhost:8000/api/v1/utils/health-check" ]
       interval: 100s
@@ -56,11 +59,16 @@ services:
       context: url_shortener_service
       dockerfile: Dockerfile
     networks: [ internal ]
-    ports:
-      - "8000:8000"
 
   redis:
-    image: redis:alpine
+    image: redis:7-alpine
+    command: >
+      redis-server --save 60 1 --appendonly yes --loglevel warning
+    healthcheck:
+      test: [ "CMD", "redis-cli", "PING" ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
     volumes:
       - ./redis_data:/data
     networks: [ internal ]
@@ -83,3 +91,12 @@ services:
     depends_on:
       - db
     networks: [ internal, edge ]
+
+  dozzle:
+    image: amir20/dozzle:latest
+    restart: always
+    environment:
+      - DOZZLE_BASE=/dozzle
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+    networks: [ internal ]
